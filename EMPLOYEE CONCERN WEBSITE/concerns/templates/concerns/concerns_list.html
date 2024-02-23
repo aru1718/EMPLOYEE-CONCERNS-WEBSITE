@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Employee Concerns</title>
+    <img src="https://static.ambitionbox.com/alpha/company/photos/logos/talentserve.jpg" alt="TalentServe Logo" class="logo">
+    <link rel="stylesheet" type="text/css" href="{% static 'concerns/css/styles.css' %}">
+    <script src="{% static 'concerns/js/script.js' %}"></script>
+    <style>
+        .logo {
+            display: block;
+            width: 200px; /* Adjust the width as needed */
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Concerns</h1>
+    <ul>
+        {% for concern in concerns %}
+        <li>
+            <h2>{{ concern.title }}</h2>
+            <p>{{ concern.description }}</p>
+            <p>Posted by: {{ concern.employee_name }}</p>
+            <p>Date Posted: {{ concern.date_posted }}</p>
+            <form action="{% url 'delete_concern' concern.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_concern' %}" class="create-link">Create New Concern</a>
+</body>
+</html>
